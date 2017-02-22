@@ -22,19 +22,13 @@ public class PanelMain extends JPanel implements ActionListener{
 	private JMenuItem revision = new JMenuItem("Revision mode");
 	private JMenuItem free = new JMenuItem("Free mode");
 	private PanelIntelligent panelIntelligent;
-	private PanelEditAdmin panelEditAdmin;
-	private PanelEditUser panelEditUser;
+
 	
 	public PanelMain(String role, String username) {
 		super(new CardLayout());
 		this.role = role;
-		if(this.getRole().equals("admin")) {
-			panelEditAdmin = new PanelEditAdmin(username);
-			add(panelEditAdmin, "EDIT PANEL");
-		}else if (this.getRole().equals("user")) {
-			panelEditUser = new PanelEditUser(username);
-			add(panelEditUser, "EDIT PANEL");
-		}
+		add(new PanelEdit(username, role), "EDIT PANEL");
+		
 		panelIntelligent = new PanelIntelligent();
 		
 		add(panelIntelligent, "INTELLIGENT PANEL");
