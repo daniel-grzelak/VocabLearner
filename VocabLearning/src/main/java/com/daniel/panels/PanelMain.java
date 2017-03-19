@@ -1,17 +1,15 @@
 package com.daniel.panels;
 
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
+
 
 public class PanelMain extends JPanel implements ActionListener{
 
@@ -21,17 +19,23 @@ public class PanelMain extends JPanel implements ActionListener{
 	private JMenuItem intelligent = new JMenuItem("Intelligent mode");
 	private JMenuItem revision = new JMenuItem("Revision mode");
 	private JMenuItem free = new JMenuItem("Free mode");
-	private PanelIntelligent panelIntelligent;
 
+	private PanelFree panelFree;
+	private PanelIntelligent panelIntelligent;
+	private PanelRevision panelRevision;
 	
 	public PanelMain(String role, String username) {
 		super(new CardLayout());
 		this.role = role;
-		add(new PanelEdit(username, role), "EDIT PANEL");
-		
+		panelFree = new PanelFree();
 		panelIntelligent = new PanelIntelligent();
-		
+		add(new PanelEdit(username, role), "EDIT PANEL");
+		add(panelFree, "FREE PANEL");
 		add(panelIntelligent, "INTELLIGENT PANEL");
+		add(panelRevision, "REVISION PANEL");
+		
+
+
 		
 		
 
@@ -93,7 +97,63 @@ public class PanelMain extends JPanel implements ActionListener{
 	}
 
 
+	private void showSettingsWindowFree()
+	{
+		JFrame frame = new JFrame("Free mode settings");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		PanelSettings panelSettings = new PanelSettings(username, panelFree);
 
+		panelSettings.setVisible(true);
+		frame.setContentPane(panelSettings); 
+		
+		
+		frame.setVisible(true);
+		frame.setResizable(false); 
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		
+		
+	}
+	
+	private void showSettingsWindowIntelligent()
+	{
+		JFrame frame = new JFrame("Intelligent mode settings");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		PanelSettings panelSettings = new PanelSettings(username, panelIntelligent);
+
+		panelSettings.setVisible(true);
+		frame.setContentPane(panelSettings); 
+		
+		
+		frame.setVisible(true);
+		frame.setResizable(false); 
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		
+		
+	}
+	
+	private void showSettingsWindowRevision()
+	{
+		JFrame frame = new JFrame("Revision mode settings");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		PanelSettings panelSettings = new PanelSettings(username, panelRevision);
+
+		panelSettings.setVisible(true);
+		frame.setContentPane(panelSettings); 
+		
+		
+		frame.setVisible(true);
+		frame.setResizable(false); 
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		
+		
+	}
+	
 	
 
 	@Override
@@ -101,12 +161,15 @@ public class PanelMain extends JPanel implements ActionListener{
 		if (e.getSource() == intelligent) {
 			CardLayout layout = (CardLayout) getLayout();
 			layout.show(this, "INTELLIGENT PANEL");
+			showSettingsWindowIntelligent();
 		} else if (e.getSource() == free) {
 			CardLayout layout = (CardLayout) getLayout();
 			layout.show(this, "FREE PANEL");
+			showSettingsWindowFree();
 		} else if (e.getSource() == revision) {
 			CardLayout layout = (CardLayout) getLayout();
 			layout.show(this, "REVISION PANEL");
+			showSettingsWindowRevision();
 		} else if (e.getSource() == edit) {
 			CardLayout layout = (CardLayout) getLayout();
 			layout.show(this, "EDIT PANEL");

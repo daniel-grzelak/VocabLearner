@@ -47,7 +47,7 @@ public class Database {
 							+ "wordPL varchar(50) not null,"
 							+ "wordENG varchar(50) not null,"
 							+ "user varchar(50) not null,"
-							+ "level varchar(10),"
+							+ "level varchar(10) not null default '0000000000',"
 							+ "interval integer not null,"
 							+ "date date);";
 
@@ -227,4 +227,90 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	//-------------------------------FREE MODE-----------------------------
+	
+	public static List<WordsAll> selectWordsFree(String username, int limit) {
+
+		try {
+			List<WordsAll> words = new ArrayList<>();
+			
+			String select = "Select id, wordPL, wordENG, interval FROM Words WHERE user = ? or user = 'admin' ORDER BY RANDOM() LIMIT ?;";
+			PreparedStatement ps = conn.prepareStatement(select);
+			ps.setString(1, username);
+			ps.setInt(2, limit);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				words.add(new WordsAll(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
+			}
+			return words;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	//---------------------------------INTELLIGENT MODE--------------------------
+	
+	public static List<WordsAll> selectWordsIntelligent(String username, int limit) {
+
+		try {
+			List<WordsAll> words = new ArrayList<>();
+			
+			String select = "Select id, wordPL, wordENG, interval, level FROM Words WHERE user = ? or user = 'admin' ORDER BY RANDOM() LIMIT ?;";
+			PreparedStatement ps = conn.prepareStatement(select);
+			ps.setString(1, username);
+			ps.setInt(2, limit);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				words.add(new WordsAll(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+			}
+			return words;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static void updateWordsLevel(List<WordsAll> list) {
+
+		for (int i = 0; i < list.size(); i++) {
+			PreparedStatement ps;
+			try {
+				String updateUser = "UPDATE Words SET " + "level = ? " + "WHERE id = ?";
+				ps = conn.prepareStatement(updateUser);
+				ps.setString(1, list.get(i).getLevel());
+				ps.setInt(2, list.get(0).getId());
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
+	}
+	
+	//--------------------------REVISION MODE-------------------
+	
+	public static List<WordsAll> selectWordsRevision(String username, int limit) {
+
+		try {
+			List<WordsAll> words = new ArrayList<>();
+			
+			String select = "Select id, wordPL, wordENG, interval, level FROM Words WHERE user = ? or user = 'admin' ORDER BY RANDOM() LIMIT ?;";
+			PreparedStatement ps = conn.prepareStatement(select);
+			ps.setString(1, username);
+			ps.setInt(2, limit);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				words.add(new WordsAll(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+			}
+			return words;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }

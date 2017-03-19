@@ -1,6 +1,9 @@
 package com.daniel;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.daniel.classes.User;
 import com.daniel.classes.WordsAll;
@@ -14,6 +17,7 @@ public class App
 
 		JFrame frame = new JFrame("Vocab learner");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		
 		PanelLogin panel = new PanelLogin();
 
 		panel.setVisible(true);
@@ -29,10 +33,32 @@ public class App
 		Database.connect();
 		Database.createTables();
 		
-		//Database.insertUser(new User(0, "admin", "admin", "admin"));
-		//Database.insertUser(new User(0, "user", "user", "user"));
-		
 
+		
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+			 try {
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (InstantiationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IllegalAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (UnsupportedLookAndFeelException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		javax.swing.SwingUtilities.invokeLater(
 				new Runnable()
 				{

@@ -52,13 +52,15 @@ public class PanelLogin extends JPanel implements ActionListener {
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
+	
 		add(bLogin, gbc);
 		bLogin.addActionListener(this);
 
-		gbc.gridx = 2;
+		gbc.gridx = 4;
 		gbc.gridy = 2;
 		add(bCancel, gbc);
 		bCancel.addActionListener(this);
+		
 
 	}
 

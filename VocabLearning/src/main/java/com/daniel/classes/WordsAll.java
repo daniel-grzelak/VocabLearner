@@ -30,6 +30,15 @@ public class WordsAll {
 		this.interval = interval;
 	}
 	
+	public WordsAll(Integer id, String wordPl, String wordEng, int interval, String level) {
+		super();
+		this.id = id;
+		this.wordPl = wordPl;
+		this.wordEng = wordEng;
+		this.interval = interval;
+		this.level = level;
+	}
+	
 	
 
 	@Override

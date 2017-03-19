@@ -20,9 +20,8 @@ import javax.swing.JTextField;
 
 import com.daniel.classes.WordsAll;
 import com.daniel.database.Database;
-
-import daniel.grzelak.models.CustomTableModelAdmin;
-import daniel.grzelak.models.CustomTableModelUser;
+import com.daniel.models.CustomTableModelAdmin;
+import com.daniel.models.CustomTableModelUser;
 
 public class PanelEdit extends JPanel {
 
